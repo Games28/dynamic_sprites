@@ -70,7 +70,8 @@ public:
 		olc::Pixel p = olc::WHITE);
 
 	float toRadians(float angle);
-	float inrange(float baseangle,float angle, float range);
+	float inrange(float fBase_deg, float fCurA_deg, float fRange_deg);
+	float Mod2Pi(float angle);
 };
 
 

@@ -108,7 +108,7 @@ void Segments::Update(float x, float y, bool basedset, float range)
 
 
 	segments[lead]->follow(x, y);
-	segments[lead]->update(range);
+	segments[lead]->update(0);
 
 
 	for (int i = segments.size() - 2; i >= 0; i--)

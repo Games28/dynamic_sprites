@@ -4,12 +4,13 @@ void Application::Setup(olc::PixelGameEngine* pge)
 {
 	Mainpos = { pge->ScreenWidth() / 2, 150 };
 	Basepos = Mainpos;
-	std::vector<int> mainvectors = { 90,50 };
-	std::vector<float> mainangles = { toRadians(110),toRadians(75)};
+	std::vector<int> mainvectors = { 90,100 };
+	std::vector<float> mainangles = { toRadians(90),toRadians(75)};
 	mainbody = new Segments(pge->ScreenWidth() / 2, 100, mainangles, mainvectors, 2);
 	//mainbody->AddSegment()
 	segment seg1 = mainbody->getSegment(0);
 	segment seg2 = mainbody->getSegment(1);
+	leadpos = { (int)seg2.b.x,(int)seg2.b.y + 50 };
 	
 	Body* Atbody = new Body(BoxShape(100, 100,LEFT), Mainpos.x,Mainpos.y, 0.0, true);
 	Atbody->SetTexture("ATbody.png");
@@ -81,35 +82,35 @@ void Application::Input(olc::PixelGameEngine* ptr)
 	}
 	
 	if (ptr->GetKey(olc::I).bHeld)
-		leadpos.y = -1;
+		leadpos.y += -1;
 	
 	if (ptr->GetKey(olc::K).bHeld)
-		leadpos.y = 1;
+		leadpos.y += 1;
 	
 	if (ptr->GetKey(olc::J).bHeld)
 	{
-		leadpos.x = -1;
+		leadpos.x += -1;
 		
 	}
 	if (ptr->GetKey(olc::L).bHeld)
 	{
-		leadpos.x = 1;
+		leadpos.x += 1;
 	}
 
 	if (ptr->GetKey(olc::I).bReleased)
-		leadpos.y = 0;
+		leadpos.y += 0;
 
 	if (ptr->GetKey(olc::K).bReleased)
-		leadpos.y = 0;
+		leadpos.y += 0;
 
 	if (ptr->GetKey(olc::J).bReleased)
 	{
-		leadpos.x = 0;
+		leadpos.x += 0;
 
 	}
 	if (ptr->GetKey(olc::L).bReleased)
 	{
-		leadpos.x = 0;
+		leadpos.x += 0;
 	}
 	
 	
@@ -150,19 +151,50 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 	segment baseseg = mainbody->getSegment(0);
 	bObjects[1]->position.x = Basepos.x;
 	bObjects[1]->position.y = Basepos.y;
-	bObjects[1]->rotation = inrange(baseseg.baseangle - 1.57,baseseg.angle - 1.57,30);
-
+	bObjects[1]->rotation = baseseg.angle - 1.57;
+	
 
 	segment leadseg = mainbody->getSegment(1);
-	bObjects[2]->position.x = leadseg.a.x;
-	bObjects[2]->position.y = leadseg.a.y;
-	bObjects[2]->rotation = inrange(leadseg.baseangle - 1.57,leadseg.angle - 1.57, 30);
 	
-	ptr->DrawString(20, 20, "rotation1: " + std::to_string(bObjects[1]->rotation));
-	ptr->DrawString(20, 30, "rotation2: " + std::to_string(bObjects[2]->rotation));
+	bObjects[2]->position.x = leadseg.a.x;
+     bObjects[2]->position.y = leadseg.a.y;
+	//bObjects[2]->rotation = leadseg.angle - 1.57;
+
+
+	float currentangle = leadseg.angle - 1.57;
+	float minrange = -0.1;
+	float maxrange = -0.5;
+	float distX = leadpos.x - leadseg.a.x;
+	float distY = leadpos.y - leadseg.a.y;
+	float dx = distX * cos(currentangle);
+	float dy = distX * sin(currentangle);
+
+	if (currentangle > minrange)
+	{
+		
+	bObjects[2]->rotation = minrange;
+	}
+	else if (currentangle < maxrange)
+	{
+		bObjects[2]->rotation = maxrange;
+	}
+	else
+	{
+		
+		bObjects[2]->rotation = currentangle;
+
+	}
+
+	
+
+	//bObjects[2]->rotation = inrange(leadseg.baseangle,leadseg.angle ,30);
+	
+	ptr->DrawString(20, 20, "xdist: " + std::to_string(dx));
+	ptr->DrawString(20, 30, "ydist: " + std::to_string(dy));
 	mainbody->addBase(bObjects[0]->position.x, bObjects[0]->position.y);
-	mainbody->Update(leadseg.b.x + leadpos.x, leadseg.b.y + leadpos.y, true,0);
+	mainbody->Update(leadpos.x, leadpos.y, true,0);
 	mainbody->UpdateBase();
+	ptr->FillCircle(leadpos.x, leadpos.y, 5, olc::CYAN);
 	//player->update(ptr);
 }
 
@@ -254,7 +286,7 @@ void Application::Render(olc::PixelGameEngine* ptr)
 
 		
 	}
-	//mainbody->Render(ptr);
+	mainbody->Render(ptr);
 	//player->render(ptr);
 	
 }
@@ -305,24 +337,42 @@ float Application::toRadians(float angle)
 	return angle * (3.14159 / 180);
 }
 
-float Application::inrange(float baseangle, float angle, float range)
+float Application::inrange(float fBase_deg, float fCurA_deg, float fRange_deg)
 {
-	float Baseangle = toRadians(baseangle);
-	float curangle = toRadians(angle);
-	float minrange = Baseangle + -toRadians(range);
-	float maxrange = Baseangle + toRadians(range);
+	 float fBaseA_rad = toRadians( fBase_deg );
+    float fCurA_rad  = toRadians( fCurA_deg  );
+    float minrange = Mod2Pi( fBaseA_rad - toRadians( fRange_deg ));
+    float maxrange = Mod2Pi( fBaseA_rad + toRadians( fRange_deg ));
 
-	if (curangle < minrange)
+    float fResult = fCurA_rad;
+
+    if (minrange < maxrange) {
+        // minrange and maxrange are not flipped around 0 radians
+        if (minrange > fCurA_rad || fCurA_rad > maxrange) {
+            // angle is not in range, return the boundary that's closest to it
+            fResult = (abs( minrange - fCurA_rad ) < abs( maxrange - fCurA_rad )) ? minrange : maxrange;
+        }
+    } else {
+        // minrange and maxrange are flipped around 0 radians
+        if (minrange > fCurA_rad && fCurA_rad > maxrange) {
+            // angle is not in range, return the boundary that's closest to it
+            fResult =  (abs( minrange - fCurA_rad ) < abs( maxrange - fCurA_rad )) ? minrange : maxrange;
+        }
+    }
+    return fResult;
+}
+
+float Application::Mod2Pi(float angle)
+{
+	while (angle < 0.0f)
 	{
-		return minrange;
+		angle += 2.0f * 3.1415926535f;
 	}
-	else if (curangle > maxrange)
+
+	while (angle >= 2.0f * 3.1415926535f)
 	{
-		return maxrange;
+		angle -= 2.0f * 3.1415926535f;
+
 	}
-	else
-	{
-		return curangle;
-	}
-	
+	return angle;
 }
