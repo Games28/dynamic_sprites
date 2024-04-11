@@ -5,13 +5,13 @@ void Application::Setup(olc::PixelGameEngine* pge)
 	Mainpos = { pge->ScreenWidth() / 2, 150 };
 	Basepos = Mainpos;
 	std::vector<int> mainvectors = { 90,100 };
-	std::vector<float> mainangles = { toRadians(90),toRadians(75)};
+	std::vector<float> mainangles = { toRadians(130),toRadians(90)};
 	mainbody = new Segments(pge->ScreenWidth() / 2, 100, mainangles, mainvectors, 2);
 	//mainbody->AddSegment()
 	segment seg1 = mainbody->getSegment(0);
 	segment seg2 = mainbody->getSegment(1);
-	leadpos = { (int)seg2.b.x,(int)seg2.b.y + 50 };
 	
+	newpos = { Mainpos.x , Mainpos.y + 180 };
 	Body* Atbody = new Body(BoxShape(100, 100,LEFT), Mainpos.x,Mainpos.y, 0.0, true);
 	Atbody->SetTexture("ATbody.png");
 	
@@ -145,8 +145,7 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 	bObjects[0]->position.y = Mainpos.y;
 
 	Basepos = Mainpos;
-	//bObjects[1]->position.x = Basepos.x;
-	//bObjects[1]->position.y = Basepos.y;
+	
 
 	segment baseseg = mainbody->getSegment(0);
 	bObjects[1]->position.x = Basepos.x;
@@ -158,24 +157,26 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 	
 	bObjects[2]->position.x = leadseg.a.x;
      bObjects[2]->position.y = leadseg.a.y;
-	//bObjects[2]->rotation = leadseg.angle - 1.57;
+	
 
 
 	float currentangle = leadseg.angle - 1.57;
 	float minrange = -0.1;
 	float maxrange = -0.5;
-	float distX = leadpos.x - leadseg.a.x;
-	float distY = leadpos.y - leadseg.a.y;
+	float distX = leadseg.a.x - leadpos.x;
+	float distY = leadseg.a.y - leadpos.y;
 	float dx = distX * cos(currentangle);
 	float dy = distX * sin(currentangle);
 
 	if (currentangle > minrange)
 	{
 		
+
 	bObjects[2]->rotation = minrange;
 	}
 	else if (currentangle < maxrange)
 	{
+		
 		bObjects[2]->rotation = maxrange;
 	}
 	else
@@ -185,16 +186,15 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 
 	}
 
-	
-
+	newpos = { (Mainpos.x) + leadpos.x, (Mainpos.y + 180) + leadpos.y };
 	//bObjects[2]->rotation = inrange(leadseg.baseangle,leadseg.angle ,30);
 	
-	ptr->DrawString(20, 20, "xdist: " + std::to_string(dx));
-	ptr->DrawString(20, 30, "ydist: " + std::to_string(dy));
+	ptr->DrawString(20, 20, "mainx: " + std::to_string(Mainpos.x) + "mainy :" + std::to_string(Mainpos.y));
+	ptr->DrawString(20, 30, "leadx: " + std::to_string(leadpos.x) + "leady :" + std::to_string(leadpos.y));
 	mainbody->addBase(bObjects[0]->position.x, bObjects[0]->position.y);
-	mainbody->Update(leadpos.x, leadpos.y, true,0);
+	mainbody->Update(newpos.x, newpos.y, true,0);
 	mainbody->UpdateBase();
-	ptr->FillCircle(leadpos.x, leadpos.y, 5, olc::CYAN);
+	ptr->FillCircle(newpos.x, newpos.y, 5, olc::CYAN);
 	//player->update(ptr);
 }
 

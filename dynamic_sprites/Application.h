@@ -54,6 +54,7 @@ public:
 	//test
 	olc::vi2d Mainpos;
 	olc::vi2d Basepos;
+	olc::vi2d newpos;
 	float testangle = 0;
 	
 public:
