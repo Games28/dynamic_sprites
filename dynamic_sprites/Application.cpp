@@ -189,7 +189,7 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 
 	for (int i = 0; i < thebody.size(); i++)
 	{
-		
+		//front leg
 		if(i == index)
 		{
 		
@@ -208,7 +208,7 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 			bObjects[5]->position.y = leadseg.a.y;
 		
 		
-		
+		   //my current segment rotation contraint
 			float currentangle = leadseg.angle - 1.57;
 			float minrange = -0.1;
 			float maxrange = -0.5;
@@ -268,7 +268,7 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 			//player->update(ptr);
 		}
 
-
+		//back leg
 		if (i == index)
 		{
 
@@ -287,7 +287,7 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 			bObjects[1]->position.y = leadseg.a.y;
 
 
-
+			//my current segment rotation contraint
 			float currentangle = leadseg.angle - 1.57;
 			float minrange = -0.1;
 			float maxrange = -0.5;
