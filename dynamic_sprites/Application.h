@@ -31,15 +31,18 @@ public:
 	olc::Sprite* sprite;
 	olc::Decal* Dsprite;
 	ManipulatedSprite MS;
-	int index = 0;
+	
 	int saberindex;
 	
 	int bodynumber = 0;
 	int mousenumber = 0;
-	olc::vi2d leadpos;
+	olc::vi2d leadpos0;
+	olc::vi2d leadpos1;
 
 	olc::Sprite* mandosprite;
 	Segments* mainbody;
+	Segments* backbody;
+
 	Vec2f offsets[8];
 	Vec2f mandopos = { 500,100 };
 	Vec2f resultpos = { 0,0 };
@@ -47,8 +50,8 @@ public:
 	int width = 40;
 	int height = 40;
 	bool changed = false;
-
-	std::vector<segment*> thebody;
+	bool index = false;
+	std::vector<Segments*> thebody;
 
 	olc::Sprite* result;
 	//test
