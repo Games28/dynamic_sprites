@@ -41,7 +41,8 @@ struct Body
 	
 	void AddForce(const Vec2f& force);
 	void AddTorque(float torque);
-
+	void AddPosition(Vec2f& pos);
+	void AddRotation(float rotate);
 	void ClearTorgue();
 	void ClearForces();
 

@@ -37,6 +37,11 @@ Character::Character(olc::vf2d p)
 	right_leg = Limb(skeleton.right_hip, 16.0f, 14.0f, true);
 }
 
+Kinematics::Kinematics(olc::PixelGameEngine* pge)
+{
+	player = new Character({ 300, 200 });
+}
+
 void Kinematics::FKAL(Limb& limb, olc::vf2d target)
 {
 	std::vector<olc::vf2d> calculatedPoints;
@@ -80,6 +85,25 @@ olc::vf2d Kinematics::polarToCartesian(float angle, float distance)
 	return { x, y };
 }
 
+bool Kinematics::IsPointInCircle(olc::vf2d a, olc::vf2d b, float r)
+{
+	return fabs((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)) < (r * r);
+}
+
+void Kinematics::IsJointSelected(olc::PixelGameEngine* pge)
+{
+	if (IsPointInCircle(player->left_arm.p3 + player->p, pge->GetMousePos()))
+		selectedJoint = &player->skeleton.left_hand;
+	else if (IsPointInCircle(player->right_arm.p3 + player->p, pge->GetMousePos()))
+		selectedJoint = &player->skeleton.right_hand;
+	else if (IsPointInCircle(player->left_leg.p3 + player->p, pge->GetMousePos()))
+		selectedJoint = &player->skeleton.left_foot;
+	else if (IsPointInCircle(player->right_leg.p3 + player->p, pge->GetMousePos()))
+		selectedJoint = &player->skeleton.right_foot;
+	else
+		selectedJoint = nullptr;
+}
+
 void Kinematics::DrawCharacter(Character* c, olc::PixelGameEngine* pge)
 {
 	float r = 5.0f;
@@ -107,16 +131,52 @@ void Kinematics::DrawCharacter(Character* c, olc::PixelGameEngine* pge)
 
 void Kinematics::setup(olc::PixelGameEngine* pge)
 {
-	olc::vf2d screenCenter = { 300, 200 };
-	player = new Character(screenCenter);
+	
+	
 }
 
 void Kinematics::update(olc::PixelGameEngine* pge)
 {
 	FKAL(player->left_arm, player->skeleton.left_hand);
+	pge->DrawString(20, 20, "p1x: " + std::to_string(player->left_arm.p1.x) + "ply: " +std::to_string(player->left_arm.p1.y));
+	pge->DrawString(20, 30, "p2x: " + std::to_string(player->left_arm.p2.x) + "p2y: " + std::to_string(player->left_arm.p2.y));
+	pge->DrawString(20, 40, "p3x: " + std::to_string(player->left_arm.p3.x) + "p3y: " + std::to_string(player->left_arm.p3.y));
 	FKAL(player->right_arm, player->skeleton.right_hand);
 	FKAL(player->left_leg, player->skeleton.left_foot);
 	FKAL(player->right_leg, player->skeleton.right_foot);
+
+	if (pge->GetKey(olc::UP).bHeld)
+	{
+		player->p.y -= 0.01f;
+	}
+
+	if (pge->GetKey(olc::DOWN).bHeld)
+	{
+		player->p.y += 0.01f;
+	}
+
+	if (pge->GetKey(olc::LEFT).bHeld)
+	{
+		player->p.x -= 0.01f;
+		player->viewDir = -1;
+	}
+
+	if (pge->GetKey(olc::RIGHT).bHeld)
+	{
+		player->p.x += 0.01f;
+		player->viewDir = 1;
+	}
+	if (pge->GetMouse(0).bPressed) {
+		IsJointSelected(pge);
+	}
+
+	if (pge->GetMouse(0).bHeld) {
+		if (selectedJoint != nullptr) {
+			selectedJoint->x = pge->GetMouseX() - player->p.x;
+			selectedJoint->y = pge->GetMouseY() - player->p.y;
+		}
+	}
+
 }
 
 void Kinematics::render(olc::PixelGameEngine* pge)

@@ -19,43 +19,22 @@ void ManipulatedSprite::ScaleSprite(olc::Sprite* orgSprite, olc::Sprite** active
     }
 }
 
-void ManipulatedSprite::Setup(olc::PixelGameEngine *pge)
-{
-	
-	//activeSpr = new olc::Sprite(100, 100);
-	//
-	//for (int x = 0; x < activeSpr->width; x++)
-	//{
-	//	for (int y = 0; y < activeSpr->height; y++)
-	//	{
-	//		activeSpr->SetPixel(x, y, olc::BLUE);
-	//	}
-	//}
-}
+
 
 void ManipulatedSprite::Render(olc::PixelGameEngine* pge, Body* body)
 {
 	BoxShape* boxShape = (BoxShape*)body->shape;
 	std::array<Vec2f, 4> points;
+	
 
-	if (pge->GetKey(olc::P).bPressed)
-	{
-		activeSpr = body->sprite->Duplicate();
-	}
-	
-	//points[0] = boxShape->worldvertices[3];
-	//points[1] = boxShape->worldvertices[2];
-	//points[2] = boxShape->worldvertices[1];
-	//points[3] = boxShape->worldvertices[0];
-	points[0] = boxShape->worldvertices[0]; 
-	points[1] = boxShape->worldvertices[3]; 
-	points[2] = boxShape->worldvertices[2]; 
-	points[3] = boxShape->worldvertices[1]; 
-	
+	points[0] = boxShape->worldvertices[0];
+	points[1] = boxShape->worldvertices[3];
+	points[2] = boxShape->worldvertices[2];
+	points[3] = boxShape->worldvertices[1];
 
 	DrawWarpedSprite(pge, points,body->sprite);
 
-	pge->DrawSprite(400, 200, activeSpr);
+	
 
 }
 
@@ -122,7 +101,7 @@ void ManipulatedSprite::mousecontrol(olc::PixelGameEngine* pge, Body* body,int& 
 			}
 			else
 			{
-				count++;
+				
 			}
 			
 			

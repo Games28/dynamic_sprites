@@ -44,7 +44,7 @@ public:
 int main()
 {
 	dynamic_sprites demo;
-	if (demo.Construct(1200, 800, 1, 1))
+	if (demo.Construct(800, 600, 1, 1))
 		demo.Start();
 
 	return 0;

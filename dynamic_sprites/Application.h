@@ -18,7 +18,7 @@ public:
 public:
 	std::vector<Body*> bSetting;
 	std::vector<Body*> bObjects;
-	Kinematics* player;
+	Kinematics* Kinetic;
 	Vec2f pushForce = Vec2f(0,0);
 	Vec2f* pSelected = nullptr;
 	int pIndex = -1;
@@ -31,7 +31,7 @@ public:
 	olc::Sprite* sprite;
 	olc::Decal* Dsprite;
 	ManipulatedSprite MS;
-	
+	float newrotation;
 	int saberindex;
 	
 	int bodynumber = 0;
@@ -59,7 +59,8 @@ public:
 	olc::vi2d Basepos;
 	olc::vi2d newpos;
 	float testangle = 0;
-	
+	bool leftmax = false;
+	bool rightmax = false;
 public:
 
 	void Setup(olc::PixelGameEngine* pge);

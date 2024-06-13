@@ -1,0 +1,253 @@
+Kinetic = new Kinematics(pge);
+Mainpos = { 300, 200 };
+Basepos = Mainpos;
+std::vector<int> mainvectors = { 90,100 };
+std::vector<float> mainangles = { toRadians(130),toRadians(90)};
+//mainbody = new Segments(pge->ScreenWidth() / 2, 100, mainangles, mainvectors, 2);
+//mainbody->AddSegment()
+
+//for (int i = 0; i < 2; i++)
+//{
+//	Segments* mainbody = new Segments(pge->ScreenWidth() / 2, 100, mainangles, mainvectors, 2);
+//	thebody.push_back(mainbody);
+//}
+
+
+setup funciton
+//bObjects.push_back(BackAtupleg); //0
+//bObjects.push_back(BackAtlowleg); //1
+//bObjects.push_back(BackAtfoot); // 2
+ 
+//segment seg1 = thebody[0]->getSegment(0);
+//segment seg2 = thebody[0]->getSegment(1);
+//segment backseg1 = thebody[1]->getSegment(0);
+//segment backseg2 = thebody[1]->getSegment(1);
+//newpos = { Mainpos.x , Mainpos.y + 180 };
+
+
+//Body* LeftArmUper = new Body(BoxShape(20,30,UPLEFT),)
+
+//back leg
+
+//Body* backAtupleg = new Body(BoxShape(50, 100, UPLEFT), Basepos.x, Basepos.y, 0.0f, true);
+////backAtupleg->SetTexture("ATupperleg.png");
+//Body* backAtlowleg = new Body(BoxShape(50, 100, UPLEFT), backseg1.a.x, backseg1.a.y, 0.0f, true);
+////backAtlowleg->SetTexture("ATlowerleg.png");
+//
+//Body* backAtfoot = new Body(BoxShape(100, 50, UPLEFT), backseg1.b.x, backseg1.b.y, 0.0f, true);
+////backAtfoot->SetTexture("ATfoot.png");
+//
+////main body
+//Body* Atbody = new Body(BoxShape(64, 64,LEFT), Mainpos.x,Mainpos.y, 0.0, true);
+//Atbody->SetTexture("ATbody.png");
+//
+////front leg
+//Body* Atupleg = new Body(BoxShape(20, 20, UPLEFT),Basepos.x,Basepos.y, 0.0f, true);
+//Atupleg->SetTexture("ATupperleg.png");
+//Body* Atlowleg = new Body(BoxShape(20, 20, UPLEFT), seg1.a.x,seg1.a.y, 0.0f, true);
+//Atlowleg->SetTexture("ATlowerleg.png");
+//
+//Body* Atfoot = new Body(BoxShape(20, 20, UPLEFT), seg1.b.x, seg1.b.y, 0.0f, true);
+//Atfoot->SetTexture("ATfoot.png");
+//
+//
+//bObjects.push_back(backAtupleg); //4
+//bObjects.push_back(backAtlowleg); //5
+//bObjects.push_back(backAtfoot); // 6
+//bObjects.push_back(Atbody); //0
+//bObjects.push_back(Atupleg); //1
+//bObjects.push_back(Atlowleg); //2
+//bObjects.push_back(Atfoot); // 3
+
+
+//player->setup(pge);
+//leadpos = { 400,300 };
+//Body* floor = new Body(BoxShape(pge->ScreenWidth() - 50, 50,false), pge->ScreenWidth() / 2.0, pge->ScreenHeight() - 50, 0.0,false);
+//Body* leftWall = new Body(BoxShape(50, pge->ScreenHeight() - 100,false), 50, pge->ScreenHeight() / 2.0 - 25, 0.0,false);
+//Body* rightWall = new Body(BoxShape(50, pge->ScreenHeight() - 100,false), pge->ScreenWidth() - 50, pge->ScreenHeight() / 2.0 - 25, 0.0,false);
+//floor->restitution = 0.5;
+//leftWall->restitution = 0.2;
+//rightWall->restitution = 0.2;
+//bSetting.push_back(floor);
+//bSetting.push_back(leftWall);
+//bSetting.push_back(rightWall);
+
+
+update function
+	//bObjects[3]->position.x = Mainpos.x;
+	//bObjects[3]->position.y = Mainpos.y;
+	//
+	//for (int i = 0; i < thebody.size(); i++)
+	//{
+	//	//front leg
+	//	if(i == index)
+	//	{
+	//	
+	//		Basepos = Mainpos;
+	//	
+	//	
+	//		segment baseseg = thebody[0]->getSegment(0);
+	//		bObjects[4]->position.x = Basepos.x;
+	//		bObjects[4]->position.y = Basepos.y;
+	//		bObjects[4]->rotation = baseseg.angle - 1.57;
+	//	
+	//	
+	//		segment leadseg = thebody[0]->getSegment(1);
+	//	
+	//		bObjects[5]->position.x = leadseg.a.x;
+	//		bObjects[5]->position.y = leadseg.a.y;
+	//	
+	//		
+	//	   //my current segment rotation contraint
+	//		float currentangle = leadseg.angle - 1.57;
+	//		float minrange = -0.1;
+	//		float maxrange = -0.5;
+	//		float distX = leadseg.a.x - leadpos0.x;
+	//		float distY = leadseg.a.y - leadpos0.y;
+	//		float dx = distX * cos(currentangle);
+	//		float dy = distX * sin(currentangle);
+	//	
+	//		if (currentangle > minrange)
+	//		{
+	//		
+	//		
+	//			bObjects[5]->rotation = minrange;
+	//		}
+	//		else if (currentangle < maxrange)
+	//		{
+	//		
+	//			bObjects[5]->rotation = maxrange;
+	//		}
+	//		else
+	//		{
+	//		
+	//			bObjects[5]->rotation = currentangle;
+	//		
+	//		}
+	//	
+	//		newpos = { (Mainpos.x) + leadpos0.x, (Mainpos.y + 180) + leadpos0.y };
+	//	
+	//		if (newpos.x < Mainpos.x - 40)
+	//		{
+	//			newpos.x = Mainpos.x - 40;
+	//		
+	//		}
+	//		if (newpos.x > Mainpos.x + 40)
+	//		{
+	//			newpos.x = Mainpos.x + 40;
+	//		}
+	//		
+	//		if (newpos.y < Mainpos.y + 150)
+	//		{
+	//			newpos.y = Mainpos.y + 150;
+	//		}
+	//		if (newpos.y > Mainpos.y + 180)
+	//		{
+	//			newpos.y = Mainpos.y + 180;
+	//		
+	//		}
+	//
+	//	
+	//
+	//		//ptr->DrawString(20, 20, "length :" + std::to_string(length));
+	//		
+	//		//ptr->DrawString(20, 30, "curlength :" + std::to_string(curlength));
+	//		//ptr->DrawString(20, 40, "rotation4  :" + std::to_string(bObjects[4]->rotation));
+	//		//ptr->DrawString(20, 50, "rotation5  :" + std::to_string(bObjects[5]->rotation));
+	//	
+	//		//bObjects[2]->rotation = inrange(leadseg.baseangle,leadseg.angle ,30);
+	//		bObjects[6]->position.x = leadseg.b.x;
+	//		bObjects[6]->position.y = leadseg.b.y;
+	//	
+	//		
+	//		thebody[0]->addBase(bObjects[3]->position.x, bObjects[3]->position.y);
+	//		thebody[0]->Update(newpos.x, newpos.y, true, 0);
+	//		thebody[0]->UpdateBase();
+	//		ptr->FillCircle(newpos.x, newpos.y, 5, olc::CYAN);
+	//		//player->update(ptr);
+	//	}
+	//
+	//	//back leg
+	//	if (i == index)
+	//	{
+	//
+	//		Basepos = Mainpos;
+	//
+	//
+	//		segment baseseg = thebody[1]->getSegment(0);
+	//		bObjects[0]->position.x = Basepos.x;
+	//		bObjects[0]->position.y = Basepos.y;
+	//		bObjects[0]->rotation = baseseg.angle - 1.57;
+	//
+	//
+	//		segment leadseg = thebody[1]->getSegment(1);
+	//
+	//		bObjects[1]->position.x = leadseg.a.x;
+	//		bObjects[1]->position.y = leadseg.a.y;
+	//
+	//
+	//		//my current segment rotation contraint
+	//		float currentangle = leadseg.angle - 1.57;
+	//		float minrange = -0.1;
+	//		float maxrange = -0.5;
+	//		float distX = leadseg.a.x - leadpos1.x;
+	//		float distY = leadseg.a.y - leadpos1.y;
+	//		float dx = distX * cos(currentangle);
+	//		float dy = distX * sin(currentangle);
+	//
+	//		if (currentangle > minrange)
+	//		{
+	//
+	//
+	//			bObjects[1]->rotation = minrange;
+	//		}
+	//		else if (currentangle < maxrange)
+	//		{
+	//
+	//			bObjects[1]->rotation = maxrange;
+	//		}
+	//		else
+	//		{
+	//
+	//			bObjects[1]->rotation = currentangle;
+	//
+	//		}
+	//
+	//		int maxdistance = baseseg.length + leadseg.length;
+	//
+	//		newpos = { (Mainpos.x) + leadpos1.x, (Mainpos.y + 180) + leadpos1.y };
+	//
+	//
+	//		if (newpos.x < Mainpos.x - 40)
+	//		{
+	//			newpos.x = Mainpos.x - 40;
+	//		
+	//		}
+	//		if (newpos.x > Mainpos.x + 40)
+	//		{
+	//			newpos.x = Mainpos.x + 40;
+	//		}
+	//		
+	//		if (newpos.y < Mainpos.y + 150)
+	//		{
+	//			newpos.y = Mainpos.y + 150;
+	//		}
+	//		if (newpos.y > Mainpos.y + 180)
+	//		{
+	//			newpos.y = Mainpos.y + 180;
+	//		}
+	//
+	//		
+	//
+	//		//bObjects[2]->rotation = inrange(leadseg.baseangle,leadseg.angle ,30);
+	//		bObjects[2]->position.x = leadseg.b.x;
+	//		bObjects[2]->position.y = leadseg.b.y;
+	//
+	//
+	//		thebody[1]->addBase(bObjects[3]->position.x, bObjects[3]->position.y);
+	//		thebody[1]->Update(newpos.x, newpos.y, true, 0);
+	//		thebody[1]->UpdateBase();
+	//		ptr->FillCircle(newpos.x, newpos.y, 5, olc::CYAN);
+	//		//player->update(ptr);
+	//	}
+	//}

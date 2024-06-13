@@ -14,7 +14,7 @@ public:
 	std::vector<Body*> bodies;
 
 	float ftheta = 0.0f;
-
+	Vec2f newpos = { 0.0f,0.0f };
 	int nScaleSprite = 2;
 	float fDispPercentage = 0.5f;
 	Vec2f scaleFactor = { 1.0f, 1.0f };
@@ -26,7 +26,7 @@ public:
 public:
 
 	void ScaleSprite(olc::Sprite* orgSprite, olc::Sprite** activeSpr, int nScale);
-	void Setup(olc::PixelGameEngine* pge);
+	
 	void Render(olc::PixelGameEngine* pge,Body* body);
 	void mousecontrol(olc::PixelGameEngine* pge, Body* body,int &count);
 	void GetQuadBoundingBoxD(std::array<Vec2d, 4>& vertices,Vec2i& UpLeft, Vec2i& LwRight);

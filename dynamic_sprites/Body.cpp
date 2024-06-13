@@ -59,6 +59,16 @@ void Body::AddTorque(float torque)
 	sumTorque += torque;
 }
 
+void Body::AddPosition(Vec2f& pos)
+{
+	position += pos;
+}
+
+void Body::AddRotation(float rotate)
+{
+	rotation += rotate;
+}
+
 void Body::ClearTorgue()
 {
 	sumTorque = 0;

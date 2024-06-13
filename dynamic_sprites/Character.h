@@ -46,6 +46,7 @@ public:
 class Character
 {
 public:
+	Character() = default;
 	Character(olc::vf2d p);
 
 public:
@@ -64,11 +65,11 @@ public:
 class Kinematics
 {
 public:
-	Kinematics() = default;
-
+	Kinematics(olc::PixelGameEngine* pge);
 	void FKAL(Limb& limb, olc::vf2d target);
 	olc::vf2d polarToCartesian(float angle, float distance);
-	
+	bool IsPointInCircle(olc::vf2d a, olc::vf2d b, float r = 5.0f);
+	void IsJointSelected(olc::PixelGameEngine* pge);
 	void DrawCharacter(Character* c, olc::PixelGameEngine* pge);
 
 	void setup(olc::PixelGameEngine* pge);
@@ -77,7 +78,7 @@ public:
 
 public:
 	Character* player = nullptr;
-	
+	olc::vf2d* selectedJoint = nullptr;
 	olc::vf2d selectionpos = { 0.0f,0.0f };
 };
 #endif // !CHARACTER_H
