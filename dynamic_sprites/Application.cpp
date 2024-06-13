@@ -90,6 +90,8 @@ void Application::Input(olc::PixelGameEngine* ptr)
 
 void Application::Update(float deltatime,olc::PixelGameEngine* ptr) 
 {
+
+
 	for (auto body : bObjects)
 	{
 		int count = 0;
@@ -103,6 +105,7 @@ void Application::Update(float deltatime,olc::PixelGameEngine* ptr)
 	//	body->Update(deltatime);
 	//}
 	
+	// commenting this out mouse control position changing works
 	for (auto body : bObjects) {
 		Vec2f movement(Mainpos.x, Mainpos.y);
 		body->AddPosition(movement);
